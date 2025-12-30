@@ -1,0 +1,20 @@
+
+.newname, .delfile, #newFileName, #oldFileName, #stageDelete, #stageDownload, .fpath, #krigeplot, #dlRasterBox,
+#plotindex,#plotclust,#console,#nclplotindex,#plotclust,#console,#ncl, #dlButtonCluster, #sampleResults, #snorm, #newproj, #addToProjectBox, 
+#sampleMetrics, #sampleDownload, #oincluded, #samplingPlan{display:none;}
+
+#QCsampleResults, #QCsampleMetrics, #QCsampleDownload, #QCsamplingPlan {display:none;}
+
+#krigewrap{min-height:600px;}
+
+.flname{margin-left:20px;}
+
+.fred{color:#ff1100;}
+.delicon{color:#DD1100;}
+
+#filelist a{margin:0 4px 0 0;}
+.fname{margin:0 0 0 3px;}
+
+.extable th td{font-size:700;}
+.extable td{padding:2px 6px;border:1px solid #ddd;}
+
