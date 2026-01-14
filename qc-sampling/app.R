@@ -16,7 +16,7 @@ projectsDir <- 'projects/'
 
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Soil Survey - EM-38"),
+  dashboardHeader(title = "QC Sampling - Soil Survey"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Data sources", tabName = "sources", icon = icon("file-upload")),
@@ -933,66 +933,6 @@ server <- function(input, output, session) {
   
   
   
-  # observeEvent(input$rawfile, {
-  #   x.path <- paste0(uploadDir, input$rawfile)
-  #   xdat <- data.table(read.csv(x.path,header = T,sep = ',',quote = '"'))
-  #   x<-xdat[rowSums(is.na(xdat[,4])) == 0,]
-  #   colnames(x)[2]<-'Well'
-  #   
-  #   updateSelectInput(session, "blankRows", h4("select blanks"),choices = as.list(x$Well))
-  # })
-  # 
-  # observeEvent(input$tvfile, {
-  #   x.path <- paste0(uploadDir, input$tvfile)
-  #   xdat <- data.table(read.csv(x.path,header = T,sep = ',',quote = '"'))
-  #   x<-xdat[rowSums(is.na(xdat[,4])) == 0,]
-  #   colnames(x)[2]<-'Well'
-  # 
-  #   updateSelectInput(session, "blankRowsTV", h4("select blanks"),choices = as.list(x$Well))
-  # })
-  # 
-  # observeEvent(input$sublank, { updateCheckboxInput(session, "sublankTV", value = input$sublank) })
-  # observeEvent(input$sublankTV, { updateCheckboxInput(session, "sublank", value = input$sublankTV) })
-  
-  # observe({
-  #   selectedBlanks <- input$blankRows
-  #   if (is.null(selectedBlanks)) {selectedBlanks <- character(0)}
-  #   x.path <- paste0(uploadDir, input$rawfile)
-  #   xdat <- data.table(read.csv(x.path,header = T,sep = ',',quote = '"'))
-  #   x<-xdat[rowSums(is.na(xdat[,4])) == 0,]
-  #   colnames(x)[2]<-'Well'
-  #   updateSelectInput(session, "blankRowsTV",label = "select blanks", choices = as.list(x$Well),selected = selectedBlanks)
-  # })
-  # 
-  #   observe({
-  #   selectedBlanksTV <- input$blankRowsTV
-  #   if (is.null(selectedBlanksTV)) {selectedBlanksTV <- character(0)}
-  #   x.path <- paste0(uploadDir, input$tvfile)
-  #   xdat <- data.table(read.csv(x.path,header = T,sep = ',',quote = '"'))
-  #   x<-xdat[rowSums(is.na(xdat[,4])) == 0,]
-  #   colnames(x)[2]<-'Well'
-  #   updateSelectInput(session, "blankRows",label = "select blanks", choices = as.list(x$Well),selected = selectedBlanksTV)
-  # })
-  # 
-  #   
-  #   
-  #   observe({
-  #     if (input$blankType=="ALS") {
-  #       shinyjs::hide('manblank')
-  #     } else {
-  #       shinyjs::show('manblank')
-  #     }
-  #   })
-  #   
-  #   
-  #   observe({
-  #     if (input$blankTypeTV=="ALS") {
-  #       shinyjs::hide('manblankTV')
-  #     } else {
-  #       shinyjs::show('manblankTV')
-  #     }
-  #   })
-  
   observeEvent(input$oldFileName, { 
     if(input$oldFileName=="" | input$newFileName == "" | input$newFileName == input$oldFileName) { return() }
     
@@ -1059,92 +999,9 @@ server <- function(input, output, session) {
       shinyjs::show('range')
     }
   })
-  # 
-  # 
-  # observeEvent(input$stageDownload, {
-  #   if(input$stageDownload!=''){
-  #     fn <- paste0(uploadDir,input$stageDownload)
-  #     if (!is.null(input$stageDelete) & file.exists(fn)) {
-  #       file.remove(fn)
-  #       shinyjs::html("filelist", as.list(getFiles(uploadDir)))
-  #       updateSelectInput(session, "rawfile", h4("Source data"),choices = list.files(path = uploadDir))
-  #       updateSelectInput(session, "tvfile", h4("Source data"),choices = list.files(path = uploadDir))
-  #     }
-  #   }
-  # })
-  
-  # output$stageDownload <- downloadHandler(
-  #   filename <- function() {
-  #     paste0(uplodDir,input$stageDownload)
-  #   },
-  #   
-  #   content <- function(file) {
-  #     file.copy("out.csv", file)
-  #   }
-  # )
   
   
-  # datasetInput <- reactive({
-  #   if(input$stageDownload!="") {
-  #     fname = paste0(uploadDir,input$stageDownload)
-  #     
-  #     downloadHandler(
-  #       filename = fname,
-  #       content = function(file) {
-  #         if(input$stageDownload!=''){
-  #           df <- data.table(read.csv(fname,header = T))
-  #           write.csv(df, file, row.names = FALSE)
-  #         }
-  #       }
-  #     )
-  #   } else {
-  #     return(FALSE)
-  #   }
-  # })
-  
-  # Downloadable csv of selected dataset ----
-  
-  # 
-  # output$downloadRpt <- downloadHandler(
-  #   filename = function() {
-  #     input$stageDownload
-  #   },
-  #   
-  #   content = function(file) {
-  #     
-  #     mydf <- report()
-  #     dateRange <- input$dates_report
-  #     selection <- input$company
-  #     export_report(mydf,selection,dateRange)
-  #     myfile <- generate_file_name(selection)
-  #     file.copy(myfile, file)
-  #     
-  #   }
-  # )
-  
-  
-  
-  # 
-  #   observeEvent( input$stageDownload , {
-  #     if(!is.null(input$stageDownload) & input$stageDownload!=''){
-  #       print(paste0(uploadDir,input$stageDownload))      
-  #       df <- data.table(read.csv(paste0(uploadDir,input$stageDownload),header = T))
-  #       write.csv(df, input$stageDownload, row.names = FALSE)
-  #     }
-  #   })
-  #   
-  #   output$downloadData <- downloadHandler(
-  #     filename = function() {
-  #       paste("data-", Sys.Date(), ".csv", sep="")
-  #     },
-  #     content = function(file) {
-  #       df <- data.table(read.csv(uploadDir,datasetInput(),header = T))
-  #       write.csv(df, file)
-  #     }
-  #   )
-  
-  #,rawFileType=input$sep
-  output$ecahistplot <- renderPlot({ecaHist(rawFile=input$rawfile,compactFactor=input$compactBy,trimLeft=input$trimleft,trimRight=input$trimright,log=input$translog)})
+    output$ecahistplot <- renderPlot({ecaHist(rawFile=input$rawfile,compactFactor=input$compactBy,trimLeft=input$trimleft,trimRight=input$trimright,log=input$translog)})
   
   output$ecapointsplot <- renderPlot({ecaPoints(rawFile=input$rawfile,compactFactor=input$compactBy,trimLeft=input$trimleft,trimRight=input$trimright,log=input$translog)})
   
@@ -1450,11 +1307,7 @@ server <- function(input, output, session) {
   })
   
   
-  
-  
-  
-  
-  # observeEvent(input$QC23sampleDesignButton, {
+    # observeEvent(input$QC23sampleDesignButton, {
   #   #gargoyle::trigger("sample_plot_valid")
   #   shinyjs::show('QC23sampleResults')
   #   shinyjs::show('QC23sampleMetrics')
