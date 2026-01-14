@@ -34,10 +34,10 @@ unloadNamespace("ggtern") # for compitabity
 options(scipen=999)
 
 #uploadDir <- 'uploads/'
-uploadDir <- '/srv/shiny-server/soil-survey/uploads/'
-polygonsDir <- '/srv/shiny-server/soil-survey/polygons/'
-stagingDir <- '/srv/shiny-server/soil-survey/staging/'
-projectsDir <- '/srv/shiny-server/soil-survey/projects/'
+uploadDir <- 'uploads/'
+polygonsDir <- 'polygons/'
+stagingDir <- 'staging/'
+projectsDir <- 'projects/'
 
 h.theme <- theme(plot.subtitle = element_text(hjust=1,size=12),plot.caption = element_text(hjust=1,size=12),panel.background = element_rect(NA),panel.grid = element_line(size=0.1,colour = "grey80"),panel.border = element_rect(fill = NA))
 
@@ -98,20 +98,20 @@ getFiles <- function(dir) {
   j=1
   # <a href='' onclick='downloadCSV(this);return false;'><i class='fas fa-download'></i></a>
   for(f in flist){
-    txt <- paste(txt, paste0("<p id='a",j,"'>
+    txt <- paste(txt, paste0("<p id='a",j,"'>",
                                 
-                              <a href='' onclick='editName(this);return false;'><i class='far fa-edit'></i></a>  
-                              <a href='' onclick='deleteFile(this);return false;'><i class='fas fa-minus-circle delicon'></i></a> 
-                              <span class='newname'>
-                                <input type='text' class='newval' value='",f,"'/>
-                                <button onclick='cancelEdit()'>Cancel</button>
-                                <button onclick='renameFile(this)'>Rename</button>
-                              </span>
-                              <span class='delfile'>
-                               <button onclick='cancelEdit()'>Cancel</button>
-                               <button onclick='approveDelete(this)' class='fred'>Delete</button>
-                              </span>
-                              <span class='fname'>",f,"</span>
+                              # <a href='' onclick='editName(this);return false;'><i class='far fa-edit'></i></a>  
+                              # <a href='' onclick='deleteFile(this);return false;'><i class='fas fa-minus-circle delicon'></i></a> 
+                              # <span class='newname'>
+                              #   <input type='text' class='newval' value='",f,"'/>
+                              #   <button onclick='cancelEdit()'>Cancel</button>
+                              #   <button onclick='renameFile(this)'>Rename</button>
+                              # </span>
+                              # <span class='delfile'>
+                              #  <button onclick='cancelEdit()'>Cancel</button>
+                              #  <button onclick='approveDelete(this)' class='fred'>Delete</button>
+                              # </span>
+                              "<span class='fname'>",f,"</span>
                               <span class='fpath'>",paste0(uploadDir,"/",f),"</span>
                              </p>"))
     j=j+1
@@ -127,13 +127,13 @@ getPolygonFiles <- function(dir) {
   txt=''
   j=1
   for(f in flist){
-    txt <- paste(txt, paste0("<p id='a",j,"'>
-                              <a href='' onclick='deleteFile(this);return false;'><i class='fas fa-minus-circle delicon'></i></a> 
-                              <span class='delfile'>
-                               <button onclick='cancelEdit()'>Cancel</button>
-                               <button onclick='approveDelete(this)' class='fred'>Delete</button>
-                              </span>
-                              <span class='fname'>",f,"</span>
+    txt <- paste(txt, paste0("<p id='a",j,"'>",
+                              # <a href='' onclick='deleteFile(this);return false;'><i class='fas fa-minus-circle delicon'></i></a> 
+                              # <span class='delfile'>
+                              #  <button onclick='cancelEdit()'>Cancel</button>
+                              #  <button onclick='approveDelete(this)' class='fred'>Delete</button>
+                              # </span>
+                             "<span class='fname'>",f,"</span>
                               <span class='fpath'>",paste0(polygonsDir,f),"</span>
                              </p>"))
     j=j+1
@@ -150,22 +150,22 @@ getProjects <- function(dir) {
   j=1
   for(pr in plist){
     flist <- list.files(paste0(projectsDir,pr,"/"))
-    txt <- paste(txt, paste("<p id='p",j,"'>
-                              <a href='' onclick='editName(this);return false;'><i class='far fa-edit'></i></a>  
-                              <span class='newname'>
-                                <input type='text' class='newval' value='",pr,"'/>
-                                <button onclick='cancelEdit()'>Cancel</button>
-                                <button onclick='renameFile(this)'>Rename</button>
-                              </span>
-                              <span class='pname' onclick='toggleExpand(this);return false;'>",pr,"</span>"))
+    txt <- paste(txt, paste("<p id='p",j,"'>",
+                              # <a href='' onclick='editName(this);return false;'><i class='far fa-edit'></i></a>  
+                              # <span class='newname'>
+                              #   <input type='text' class='newval' value='",pr,"'/>
+                              #   <button onclick='cancelEdit()'>Cancel</button>
+                              #   <button onclick='renameFile(this)'>Rename</button>
+                              # </span>
+                              "<span class='pname' onclick='toggleExpand(this);return false;'>",pr,"</span>"))
      for(fl in flist){
-       txt <- paste(txt,"<p class='flname'>
-                              <a href='' onclick='deleteFile(this);return false;'><i class='fas fa-minus-circle delicon'></i></a> 
-                              <span class='delfile'>
-                                <button onclick='cancelEdit()'>Cancel</button>
-                                <button onclick='approveDelete(this)' class='fred'>Delete</button>
-                              </span>
-                              <span class='fname'>",fl,"</span>
+       txt <- paste(txt,"<p class='flname'>",
+                              # <a href='' onclick='deleteFile(this);return false;'><i class='fas fa-minus-circle delicon'></i></a> 
+                              # <span class='delfile'>
+                              #   <button onclick='cancelEdit()'>Cancel</button>
+                              #   <button onclick='approveDelete(this)' class='fred'>Delete</button>
+                              # </span>
+                              "<span class='fname'>",fl,"</span>
                               <span class='fpath'>",paste0(projectsDir,pr,"/",fl),"</span>
                     </p>")
      }

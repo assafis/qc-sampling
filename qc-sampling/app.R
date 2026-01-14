@@ -6,11 +6,13 @@ library(shinyjs)
 library(gargoyle)
 #library(DT)
 
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 source('soil-survey_functions_shiny.R')
-uploadDir <- '/srv/shiny-server/soil-survey/uploads/'
-polygonsDir <- '/srv/shiny-server/soil-survey/polygons/'
-stagingDir <- '/srv/shiny-server/soil-survey/staging/'
-projectsDir <- '/srv/shiny-server/soil-survey/projects/'
+uploadDir <- 'uploads/'
+polygonsDir <- 'polygons/'
+stagingDir <- 'staging/'
+projectsDir <- 'projects/'
 
 
 ui <- dashboardPage(
@@ -20,13 +22,9 @@ ui <- dashboardPage(
       menuItem("Data sources", tabName = "sources", icon = icon("file-upload")),
       menuItem("ECa maps", tabName = "ecamaps", icon = icon("map")), #,badgeLabel = "new", badgeColor = "green")
       menuItem("Management Zones", tabName = "MZs", icon = icon("adjust")),
-      #menuItem("Soil sampling", tabName = "sampling", icon = icon("adjust")),
       menuItem("Variogram index", tabName = "variogram", icon = icon("flask")),
-      menuItem("QC Sample design", tabName = "QC", icon = icon("wind")),
-      menuItem("QC 2023", tabName = "QC2023", icon = icon("th"))
-      # menuItem("Raw Results", tabName = "raw", icon = icon("th")),
-      # menuItem("Correlation", tabName = "correlation", icon = icon("th")),
-      # menuItem("Parameters by ID", tabName = "params", icon = icon("th"))
+   #   menuItem("QC Sample design", tabName = "QC", icon = icon("wind")),
+      menuItem("QC Sampling", tabName = "QC2023", icon = icon("th"))
     ),
     shinyjs::useShinyjs(),
     tags$head(tags$script(src="app.js")),
@@ -48,19 +46,19 @@ ui <- dashboardPage(
                        box(title = "Upload EM38 file", status = "primary", width=12,
                            
                            box(width=12,solidHeader=F,
-                               fileInput("file1", "Upload .xyz file containing EM-38 survey data",
-                                         multiple = FALSE,
-                                         accept = c("text/csv",
-                                                    "text/comma-separated-values,text/plain",
-                                                    c(".csv",".xyz"))),
+                               # fileInput("file1", "Upload .xyz file containing EM-38 survey data",
+                               #           multiple = FALSE,
+                               #           accept = c("text/csv",
+                               #                      "text/comma-separated-values,text/plain",
+                               #                      c(".csv",".xyz"))),
                                
                                div(id="frename",
                                    #    tags$hr(),
                                    # Input: Checkbox if file has header ----
                                    #    checkboxInput("header", "First line is Header", TRUE),
-                                   tags$hr(),
-                                   textInput("fileName", "File Name", ""),
-                                   actionButton("addFile", "Add file")
+                                   tags$hr() #,
+                               # textInput("fileName", "File Name", ""),
+                               # actionButton("addFile", "Add file")
                                    # Input: Select separator ----
                                    # radioButtons("sep", "Separator",
                                    #              choices = c(Comma = "csv",
@@ -119,10 +117,10 @@ ui <- dashboardPage(
                 column(width = 4,
                        box(title = "Upload Polygon file - field perimeter", status = "info", width=12,
                            box(width=12,solidHeader=F,
-                               fileInput("file2", "polygon .shp file",
-                                         multiple = FALSE,
-                                         accept = c("text/csv",
-                                                    c(".shp"))),
+                               # fileInput("file2", "polygon .shp file",
+                               #           multiple = FALSE,
+                               #           accept = c("text/csv",
+                               #                      c(".shp"))),
                                div(id="frename2",
                                    tags$hr(),
                                    #textInput("fileName2", "File Name", ""),
@@ -159,7 +157,7 @@ ui <- dashboardPage(
                                )
                            ),
                            box(width=12,solidHeader=T,
-                               actionButton("newProjButton", "New project")
+                           #    actionButton("newProjButton", "New project")
                            ),
                            box(width=12,solidHeader=F,
                                div(id='newproj',
@@ -580,7 +578,7 @@ ui <- dashboardPage(
                        #sliderInput("QCnpoints", h4("Points range"), min = 4, max = 30, value = c(6, 10))
                        box( width = 12,
                             column(width = 6,
-                              selectInput("QC.min", h4("Min"), choices = list(4,6, 20, 30, 40), selected = 10) ),
+                              selectInput("QC.min", h4("Min"), choices = list(10, 20, 30, 40), selected = 10) ),
                             column(width = 6, selectInput("QC.max", h4("Max"), choices = list(20, 30, 40, 50,60,100,200), selected = 20) )
                        )
                 ),
@@ -687,7 +685,7 @@ ui <- dashboardPage(
                        #sliderInput("QCnpoints", h4("Points range"), min = 4, max = 30, value = c(6, 10))
                        box( width = 12,
                             column(width = 6,
-                                   selectInput("QC23.min", h4("Min"), choices = list("-"=0,4,6,10, 20, 30, 40), selected = 0) ),
+                                   selectInput("QC23.min", h4("Min"), choices = list("-"=0,10, 20, 30, 40), selected = 0) ),
                             column(width = 6, selectInput("QC23.max", h4("Max"), choices = list("-"=0,20, 30, 40, 50,60,100,200), selected = 0) )
                        )
                 ),
